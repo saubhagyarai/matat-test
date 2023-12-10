@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
 class Company extends Model
@@ -11,6 +12,11 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'email', 'logo'];
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
 
     /**
      * Get the path of logo
@@ -24,7 +30,7 @@ class Company extends Model
 
     /***
      * 
-     * Delete featured image from storage
+     * Delete logo image from storage
      */
     public function deleteLogo()
     {

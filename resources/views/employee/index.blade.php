@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Companies') }}
+            {{ __('Employees') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Using utilities: -->
             <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                href="{{route('companies.create')}}">
+                href="{{route('employees.create')}}">
                 Add
             </a>
 
@@ -24,37 +24,43 @@
                                     <thead class="border-b font-medium dark:border-neutral-500">
                                         <tr>
                                             <th scope="col" class="px-6 py-4" style="text-align: left">#</th>
-                                            <th scope="col" class="px-6 py-4" style="text-align: left">Name</th>
+                                            <th scope="col" class="px-6 py-4" style="text-align: left">Full Name</th>
+                                            <th scope="col" class="px-6 py-4" style="text-align: left">Company</th>
+
                                             <th scope="col" class="px-6 py-4" style="text-align: left">Email</th>
-                                            <th scope="col" class="px-6 py-4" style="text-align: left">Logo</th>
+                                            <th scope="col" class="px-6 py-4" style="text-align: left">Phone</th>
                                             <th scope="col" class="px-6 py-4" style="text-align: left">Actions</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        @foreach ($companies as $company)
+                                        @foreach ($employees as $employee)
 
                                         <tr class="border-b dark:border-neutral-500">
                                             <td class="whitespace-nowrap px-6 py-4 font-medium">
-                                                {{ ($companies->perPage() * ($companies->currentPage() - 1)) +
+                                                {{ ($employees->perPage() * ($employees->currentPage() - 1)) +
                                                 $loop->iteration
                                                 }}
 
                                             </td>
-                                            <td class="whitespace-nowrap px-6 py-4">{{$company->name}}</td>
-                                            <td class="whitespace-nowrap px-6 py-4">{{$company->email ?? 'N/A'}}</td>
-                                            <td class="whitespace-nowrap px-6 py-4">
-                                                <img src="{{$company->logoUrl() }}" alt="" height="60" width="60">
+                                            <td class="whitespace-nowrap px-6 py-4">{{$employee->first_name .
+                                                $employee->last_name}}</td>
+                                            <td class="whitespace-nowrap px-6 py-4">{{$employee->company->name ??
+                                                'N/A'}}
+                                            </td>
+
+                                            <td class="whitespace-nowrap px-6 py-4">{{$employee->email ?? 'N/A'}}</td>
+                                            <td class="whitespace-nowrap px-6 py-4"> {{$employee->phone ?? 'N/A'}}
                                             </td>
 
                                             <td class="whitespace-nowrap px-6 py-4">
-                                                <a href="{{route('companies.edit', $company->id)}}"
+                                                <a href="{{route('employees.edit', $employee->id)}}"
                                                     class="bg-transparent hover:bg-transparent text-blue-500 font-semibold hover:underline py-2 px-4 border border-blue-500 rounded">
                                                     Edit
                                                 </a>
 
-                                                <form action="{{route('companies.destroy', $company->id)}}"
+                                                <form action="{{route('employees.destroy', $employee->id)}}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -69,7 +75,7 @@
                                     </tbody>
                                 </table>
 
-                                {{$companies->links()}}
+                                {{$employees->links()}}
 
                             </div>
                         </div>
